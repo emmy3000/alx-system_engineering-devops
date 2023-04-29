@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#scripts extracts and displays clients IP and its HTTP status code from an Apache log file.
+
+awk '{print $1,$9}' apache-access.log
+
