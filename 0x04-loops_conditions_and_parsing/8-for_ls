@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#Script list all contents of a present working directory in a list format,
+#and truncates the first dash `('-')` character discovered on any filename.
+#Hidden files will not be displayed.
+
+for hyphenized in *
+do
+	if [ -f "$hyphenized" ] && [[ "$hyphenized" == *-* ]]
+then
+	echo "${hyphenized#*-}"
+	fi
+done
+
