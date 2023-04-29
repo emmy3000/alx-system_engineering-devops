@@ -5,9 +5,6 @@
 
 for hyphenized in *
 do
-	if [ -f "$hyphenized" ] && [[ "$hyphenized" == *-* ]]
-then
-	echo "${hyphenized#*-}"
-	fi
+	echo "$hyphenized" | cut -d '-' -f 2
 done
 
