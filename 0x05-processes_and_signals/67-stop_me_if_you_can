@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#script stops `7-highlander` process
+#Use of `kill` and `killall` are forbidden.
+
+pkill -f 7-highlander
+
