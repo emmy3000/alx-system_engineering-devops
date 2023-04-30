@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Creates a file containing the current process ID at /var/run/my_process.pid
+# Displays "I am alive!" indefinitely with a sleep of 2 seconds
+# Traps SIGINT and SIGTERM signals to display "Y U no love me?!" and "I hate the kill command" respectively
+# Traps SIGQUIT and SIGTERM signals to delete the PID file and exit the script
+# Requires SIGKILL signal to be sent to completely kill the process
+
+echo "$$" > /var/run/my_process.pid
+
+function terminate_process( ) {
+	rm /var/run/my_process.pid
+	exit
+}
+
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'echo "I hate the kill command && terminate_process' SIGTERM
+trap 'terminate_process' SIGOUT
+
+while true; do
+	echo "I am alive!"
+	sleep 2
+done
+
