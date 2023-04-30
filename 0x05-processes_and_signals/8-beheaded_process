@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#Bash script that kills the process 7-highlander.
+#When executed, it searches for the 7-highlander process ID
+#and sends a SIGKILL signal used in terminating it immediately.
+
+pkill -f -SIGKILL 7-highlander
+
