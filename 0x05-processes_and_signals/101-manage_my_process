@@ -14,6 +14,7 @@ pid_file="/var/run/my_process.pid"
 
 if [ "${1}" == "start" ]; then
 	./manage_my_process &
+	touch "${pid_file}"
 	echo "$!" > "${pid_file}"
 	echo "manage_my_process started"
 elif [ "${1}" == "stop" ]; then
@@ -36,6 +37,7 @@ elif [ "${1}" == "restart" ]; then
 		sleep 2
 	fi	
 		./manage_my_process &
+		touch "${pid_file}"
 		echo "$!" > "${pid_file}"
 		echo "manage_my_process restarted"
 else
