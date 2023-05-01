@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#The script writes "I am alive!" to /tmp/my_process every 2 seconds.
+#It's managed by the 101-manage_my_process script which starts, stops, or restarts the process.
+#It creates a PID file in /var/run/my_process when started.
+#NOTE:It doesn't handle a scenario where the process is already running on start.
+
+while true
+do
+	echo "I am alive!" >> /tmp/my_process
+	sleep 2
+done
+
