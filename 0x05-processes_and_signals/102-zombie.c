@@ -4,8 +4,8 @@
 #include <sys/wait.h>
 
 /**
- * main - program creates 5 processes eventually
- * becoming zombie processes.
+ * main - program spawns 5 child processes that eventually
+ * become zombie processes.
  *
  * Return: Always 0
  */
