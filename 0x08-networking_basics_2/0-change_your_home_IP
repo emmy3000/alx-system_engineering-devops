@@ -6,15 +6,6 @@
 #
 ##########################
 
-#if [[ $EUID -ne 0 ]]; then
-#	echo "This cript must be run as root." >&2
-#fi
-
-#sudo sed -i '/localhost/s/$/ 127.0.0.2/' /etc/hosts
-#sudo sed -i '/facebook.com/s/$/ 8.8.8.8/' /etc/hosts
-
-#echo "Localhost now resolves to 127.0.0.2"; echo "facebook.com now resolves to 8.8.8.8"
-
-cp /etc/hosts ~/hosts.new
-sed -i 's/127.*$/127.0.0.2 localhost\n8.8.8.8 facebook.com/' ~/hosts.new
-sudo cp -f ~/hosts.new /etc/hosts
+cp /etc/hosts ~/hosts.txt
+sed -i 's/127.*$/127.0.0.2 localhost\n8.8.8.8 facebook.com/' ~/hosts.txt
+sudo cp -f ~/hosts.txt /etc/hosts
