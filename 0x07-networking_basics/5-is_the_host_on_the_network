@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+###############################
+#script pings an IP address passed an argument 5 times using the ping command,
+#and displays whether the host is reachable or not.
+#
+#If no argument is passed, it displays a usage message.
+################################
+
+if [ -z "$1" ]
+then
+	echo "Usage: $0 {IP_ADDRESS}"
+	exit 1
+fi
+
+ping -c 5 "$1"
