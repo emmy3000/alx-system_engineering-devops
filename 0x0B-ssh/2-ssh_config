@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# SSH client configuration
+# This file specifies the settings for the SSH client.
+# Modify it according to your needs.
+
+Host 221827-web-01
+	User ubuntu
+	IdentityFile ~/.ssh/school
+	IdentitiesOnly yes
