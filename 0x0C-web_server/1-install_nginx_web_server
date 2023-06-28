@@ -15,14 +15,14 @@ apt-get install -y nginx
 # Create the "Hello World!" page
 echo "Hello World!" > /var/www/html/index.html
 
-# Set the owner of /var/www directory to the current user
-sudo chown -R "$USER":"$USER" /var/www
-
 # Configure firewall to allow incoming traffic on port 80
 ufw allow 'Nginx HTTP'
 
-# Configure Nginx to listen on port 80
-sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
-
 # Restart Nginx
 service nginx restart
+
+# Set the owner of /var/www directory to the current user
+sudo chown -R "$USER":"$USER" /var/www
+
+# Configure Nginx to listen on port 80
+sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
