@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Script: 1-install_nginx_web_server
+# Description: Configures a new Ubuntu machine to install and configure Nginx web server.
+# Requirements:
+#   - Installs Nginx on the server
+#   - Configures Nginx to listen on port 80
+#   - Allows incoming traffic on port 80 through the firewall
+#   - Returns a page with the string "Hello World!" when queried at root / using curl
+
+# Install Nginx
+apt-get update
+apt-get install -y nginx
+
+# Configure firewall to allow incoming traffic on port 80
+ufw allow 'Nginx HTTP'
+
+# Configure Nginx to listen on port 80
+sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx
+service nginx restart
+
+# Create the "Hello World!" page
+echo "Hello World!" > /var/www/html/index.html
