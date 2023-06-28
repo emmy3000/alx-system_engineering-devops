@@ -5,6 +5,7 @@
 #   - Installs Nginx on the server
 #   - Configures Nginx to listen on port 80
 #   - Allows incoming traffic on port 80 through the firewall
+#   - Sets the owner of the /var/www directory to the current user
 #   - Returns a page with the string "Hello World!" when queried at root / using curl
 
 # Install Nginx
@@ -13,6 +14,9 @@ apt-get install -y nginx
 
 # Create the "Hello World!" page
 echo "Hello World!" > /var/www/html/index.html
+
+# Set the owner of /var/www directory to the current user
+sudo chown -R "$USER":"$USER" /var/www
 
 # Configure firewall to allow incoming traffic on port 80
 ufw allow 'Nginx HTTP'
