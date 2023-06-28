@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Script: 3-redirection
+# Description: Configures a new Ubuntu machine to redirect /redirect_me to another page.
+# Requirements:
+#   - Configures Nginx to redirect /redirect_me with a "301 Moved Permanently" status code
+#   - Sets the redirection target to a specific page
+
+# Install Nginx (if not already installed)
+apt-get update
+apt-get install -y nginx
+
+# Create the /etc/nginx/html directory
+sudo mkdir /etc/nginx/html
+
+# Create the index.html file with "Hello World!" content
+sudo touch /etc/nginx/html/index.html
+printf %s "Hello World!" | sudo tee /etc/nginx/html/index.html > /dev/null
+
+# Configure the redirection in Nginx
+sudo printf %s "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    root   /etc/nginx/html;
+    index  index.html index.htm;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    # Rest of the server configuration...
+}" | sudo tee /etc/nginx/sites-available/default > /dev/null
+
+# Restart Nginx
+sudo service nginx restart
