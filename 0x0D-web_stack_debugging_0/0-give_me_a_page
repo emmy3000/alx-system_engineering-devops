@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Script: 0-give_me_a_page
 # Description: Run Apache on the 265-0 Docker container and configure it to return a page with the string "Hello Holberton" when querying the root.
 #
