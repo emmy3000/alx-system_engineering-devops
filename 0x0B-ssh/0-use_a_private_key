@@ -2,4 +2,4 @@
 # Script on execution connects to a server using SSH with a private key
 # and the user `ubuntu`.
 
-ssh -i ~/.ssh/school ubuntu@35.168.2.42
+ssh ubuntu -i ~/.ssh/school
