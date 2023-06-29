@@ -12,6 +12,9 @@
 sudo apt-get update
 sudo apt-get install -y nginx
 
+# Configure Nginx to listen on port 80
+sudo sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
+
 # Configure firewall to allow incoming traffic on port 80
 sudo ufw allow 'Nginx HTTP'
 
