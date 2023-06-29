@@ -9,20 +9,20 @@
 #   - Returns a page with the string "Hello World!" when queried at root / using curl
 
 # Install Nginx
-apt-get update
-apt-get install -y nginx
-
-# Create the "Hello World!" page
-echo "Hello World!" > /var/www/html/index.html
+sudo apt-get update
+sudo apt-get install -y nginx
 
 # Configure firewall to allow incoming traffic on port 80
-ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx HTTP'
 
-# Restart Nginx
-service nginx restart
+# Create the "Hello World!" page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Set the owner of /var/www directory to the current user
-sudo chown -R "$USER":"$USER" /var/www
+# Testing Nginx configurations
+sudo nginx -t
 
 # Configure Nginx to listen on port 80
 sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Reloading Nginx
+sudo service nginx reload
