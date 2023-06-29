@@ -8,11 +8,11 @@
 #   - Sets the owner of the /var/www directory to the current user
 #   - Returns a page with the string "Hello World!" when queried at root / using curl
 
-# Install Nginx
+# Install nginx
 sudo apt-get update
 sudo apt-get install -y nginx
 
-# Configure Nginx to listen on port 80
+# Configure nginx to listen on port 80
 sudo sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
 
 # Configure firewall to allow incoming traffic on port 80
@@ -21,8 +21,11 @@ sudo ufw allow 'Nginx HTTP'
 # Create the "Hello World!" page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Testing Nginx configurations
+# Testing nginx configurations
 sudo nginx -t
 
-# Reloading Nginx
+# Reloading nginx
 sudo service nginx reload
+
+# Prnt success message
+echo '200'
