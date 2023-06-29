@@ -21,8 +21,5 @@ echo "Hello World!" | sudo tee /var/www/html/index.html
 # Testing Nginx configurations
 sudo nginx -t
 
-# Configure Nginx to listen on port 80
-sed -i 's/#listen 80;/listen 80;/g' /etc/nginx/sites-available/default
-
 # Reloading Nginx
 sudo service nginx reload
