@@ -18,7 +18,7 @@ sudo ufw allow 'Nginx HTTP'
 # Create the "Hello World!" page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Testing Nginx Configurations
+# Testing Nginx configurations
 sudo nginx -t
 
 # Configure Nginx to listen on port 80
