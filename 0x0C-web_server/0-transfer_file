@@ -15,4 +15,4 @@ username="$3"
 ssh_key="$4"
 
 # Transfer the file using SCP with StrictHostKeyChecking disabled
-scp -o StrictHostKeyChecking=no -i "$ssh_key" "$file_path" "$username@$server_ip:~/"
+scp -o "StrictHostKeyChecking=no" -i "$ssh_key" "$file_path" "$username@$server_ip:~/"
