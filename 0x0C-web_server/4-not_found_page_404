@@ -6,12 +6,11 @@
 #   - Sets a custom 404 page with the message "Ceci n'est pas une page"
 
 # Install Nginx (if not already installed)
-apt-get update > /dev/null
-apt-get install -y nginx > /dev/null
+apt-get update
+apt-get install -y nginx
 
 # Update Nginx configuration to set the custom error page
 error_page_update="listen 80 default_server;\n\terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\troot /var/www/html;\n\t\tinternal;\n\t}"
-
 sudo sed -i "s|listen 80 default_server;|$error_page_update|" /etc/nginx/sites-enabled/default
 
 # Create the 404.html file with "Ceci n'est pas une page" content
