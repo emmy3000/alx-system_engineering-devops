@@ -9,30 +9,15 @@
 apt-get update > /dev/null 2>&1
 apt-get install -y nginx > /dev/null 2>&1
 
-# Create the /etc/nginx/html directory if it doesn't exist
-mkdir -p /etc/nginx/html
 
 # Create the index.html file with "Hello World!" content if it doesn't exist
-echo "Hello World!" | tee /etc/nginx/html/index.html > /dev/null
+echo "Hello World!" | sudo tee /etc/nginx/html/index.html
 
 # Configure the redirection in Nginx
-cat > /etc/nginx/sites-available/default << EOF
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+rewrite_rule="rewrite ^/redirect_me(.*) https://github.com/emmy3000 permanent;"
+config_file="/etc/nginx/sites-enabled/default"
 
-    server_name _;
-
-    root   /etc/nginx/html;
-    index  index.html index.htm;
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
-    # Rest of the server configuration...
-}
-EOF
+sudo sed -i "/server_name _;/a \\\t$rewrite_rule" "$config_file"
 
 # Restart Nginx
-service nginx restart > /dev/null 2>&1
+sudo service nginx restart
