@@ -9,34 +9,18 @@
 apt-get update > /dev/null
 apt-get install -y nginx > /dev/null
 
-# Create the /etc/nginx/html directory
-mkdir /etc/nginx/html
-
-# Create the index.html file with "Hello World!" content
-touch /etc/nginx/html/index.html
-echo "Hello World!" > /etc/nginx/html/index.html
-
-# Create the 404.html file with "Ceci n'est pas une page" content
-touch /etc/nginx/html/404.html
-echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
-
-# Configure the redirection and custom 404 page in Nginx
-printf '%s' "
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    root   /etc/nginx/html;
-    index  index.html index.htm;
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
+# Update Nginx configuration to set the custom error page
+error_page_update="listen 80 default_server;
     error_page 404 /404.html;
     location = /404.html {
+        root /var/www/html;
         internal;
-    }
-}" > /etc/nginx/sites-available/default
+    }"
+
+sudo sed -i "s|listen 80 default_server;|$error_page_update|" /etc/nginx/sites-enabled/default
+
+# Create the 404.html file with "Ceci n'est pas une page" content
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
 # Restart Nginx
-service nginx restart
+sudo service nginx restart
