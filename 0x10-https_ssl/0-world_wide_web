@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 ################################################################################
 # 0-world_wide_web - Subdomain Information Script
 #
@@ -8,14 +7,6 @@
 #
 # Usage:
 #   ./0-world_wide_web <domain> [subdomain]
-#
-# If no subdomain is specified, default subdomains will be displayed.
-# If a subdomain is specified, only information for that subdomain will be shown.
-#
-# Examples:
-#   ./0-world_wide_web example.com
-#   ./0-world_wide_web example.com www
-#
 ################################################################################
 
 get_subdomain_info() {
