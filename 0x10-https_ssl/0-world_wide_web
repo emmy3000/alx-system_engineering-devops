@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 ################################################################################
-# 0-world_wide_web - Subdomain Information Script
-#
 # Retrieves DNS information for a domain and its subdomains.
 # Displays the record type and destination IP address.
 #
