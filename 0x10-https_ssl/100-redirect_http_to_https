@@ -1,0 +1,45 @@
+# HAProxy Configuration for Load Balancing and SSL Termination
+
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    maxconn 2048
+    tune.ssl.default-dh-param 2048
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    retries 3
+    option redispatch
+    timeout connect 5000
+    timeout client 10000
+    timeout server 10000
+    option forwardfor
+    option http-server-close
+
+frontend www-frontend
+    bind *:80
+    bind *:443 ssl crt /etc/letsencrypt/live/www.websidian.tech/fullchain.pem
+    reqadd X-Forwarded-Proto:\ https
+    redirect scheme https if !{ ssl_fc }
+    default_backend www-backend
+
+backend www-backend
+    balance roundrobin
+    server 221827-web-01 54.209.192.188:80 check
+    server 221827-web-02 54.89.30.164:80 check
+
+listen stats
+    bind *:8080
+    stats enable
+    stats uri /stats
+    stats realm Haproxy\ Statistics
+    stats auth admin:password
