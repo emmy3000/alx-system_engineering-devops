@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+################################################################################
+# 0-world_wide_web - Subdomain Information Script
+#
+# Retrieves DNS information for a domain and its subdomains.
+# Displays the record type and destination IP address.
+#
+# Usage:
+#   ./0-world_wide_web <domain> [subdomain]
+#
+# If no subdomain is specified, default subdomains will be displayed.
+# If a subdomain is specified, only information for that subdomain will be shown.
+#
+# Examples:
+#   ./0-world_wide_web example.com
+#   ./0-world_wide_web example.com www
+#
+################################################################################
+
+get_subdomain_info() {
+  domain="$1"
+  subdomain="$2"
+
+  dig "$subdomain"."$domain" | tail -n 7 | head -n 1 | awk -v subdomain="${subdomain}" \
+	  '{print "The subdomain " subdomain " is a " $4 " record and points to " $5}'
+}
+
+# Main execution
+if [ -z "$1" ]; then
+  echo "*** Provide domain name ***"
+elif [ -z "$2" ]; then
+  for subdomain in 'www' 'lb-01' 'web-01' 'web-02'; do
+    get_subdomain_info "$1" "$subdomain"
+  done
+else
+  get_subdomain_info "$1" "$2"
+fi
