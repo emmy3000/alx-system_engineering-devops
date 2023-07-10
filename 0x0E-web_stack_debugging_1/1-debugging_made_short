@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Changes port in Nginx configuration while replacing all occurrences of port 8080 with port 80
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-sudo service nginx restart
-kill -9 "$(cat /var/run/nginx.pid)
+# Fix Nginx not running
+service nginx stop
+sleep 2
+service nginx start
