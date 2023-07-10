@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-# Script: 0-give_me_a_page
-# Description: Run Apache on the 265-0 Docker container and configure it to return a page with the string "Hello Holberton" when querying the root.
-#
+# Run the Docker container with port mapping
+docker run -p 8080:80 -d -it holbertonschool/265-0
 
-# Append the ServerName configuration to the Apache configuration file
-echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# Connect to the running Docker container
+docker exec -it $(docker ps -qf "ancestor=holbertonschool/265-0") /bin/bash -c '
+    # Edit the default Apache configuration file to update the content served at the root
+    sed -i "s/Hello World/Hello Holberton/" /var/www/html/index.html
 
-# Start the Apache service
-service apache2 start
+    # Restart the Apache service
+    service apache2 restart
+'
