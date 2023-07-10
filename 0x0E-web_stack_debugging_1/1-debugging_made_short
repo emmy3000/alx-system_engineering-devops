@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Fix Nginx not running
 service nginx stop
 sleep 2
 service nginx start
