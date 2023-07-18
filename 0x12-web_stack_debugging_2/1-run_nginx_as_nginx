@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Configures Nginx to run as the nginx user, listening on all active IPs on port 8080
+sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx HTTPS'
+sudo chown -R www-data:www-data /etc/nginx/*
+sudo chmod 766 /etc/nginx/nginx.conf
+sudo sed -i "/listen 80 default_server;/c\ \tlisten 8080 default_server;\n" /etc/nginx/sites-available/default
+sudo service nginx start
