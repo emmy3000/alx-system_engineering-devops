@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# UFW Firewall Installation, Configuration, and Port Forwarding Activation
+sudo apt update
+sudo apt install ufw -y
+sudo ufw default incoming
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+sudo ufw --force enable
+sudo ufw route allow 8080/tcp to 0.0.0.0/0 port 80
+sudo ufw status
