@@ -435,9 +435,9 @@ rm "$backup_file"
 user@hostname:~$ ./5-mysql_backup mydummypassword
 backup.sql
 user@hostname:~$ ls
-01-03-2017.tar.gz  5-mysql_backup  backup.sql
+20-07-2023.tar.gz  5-mysql_backup  backup.sql
 user@hostname:~$ more backup.sql
--- MySQL dump 10.13  Distrib 5.7.25, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.42, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database:
 -- ------------------------------------------------------
