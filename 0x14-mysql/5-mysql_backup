@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Bash script for generating MySQL dump and compressed archive of all databases.
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <5-mysql_backup>"
+    exit 1
+fi
+
+backup_dir="mysql_backups"
+mkdir -p "$backup_dir"
+backup_file="$backup_dir/backup.sql"
+mysqldump -u root -p"$1" --all-databases > "$backup_file"
+current_date=$(date +'%d-%m-%Y')
+tar -czvf "$backup_dir/$current_date.tar.gz" "$backup_file"
+rm "$backup_file"
