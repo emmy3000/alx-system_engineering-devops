@@ -74,4 +74,3 @@ EOF
 
 sudo systemctl enable haproxy
 sudo systemctl restart haproxy
-
