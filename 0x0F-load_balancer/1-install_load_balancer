@@ -4,8 +4,13 @@ sudo apt update
 sudo apt install -y haproxy
 
 # Create HAProxy configuration file
-cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg
-# HAProxy Configuration file for Load Balancing and SSL Termination
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+sudo mv /etc/haproxy/haproxy.cfg{,.original}
+sudo touch /etc/haproxy/haproxy.cfg
+
+# Append the HAProxy configuration content to haproxy.cfg
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+# HAProxy Configuration File
 
 global
     log /dev/log	local0
