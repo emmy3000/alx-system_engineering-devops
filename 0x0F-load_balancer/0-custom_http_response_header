@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 # Configure Nginx to add a custom HTTP response header (X-Served-By)
-# Usage: ./0-custom_http_response_header
-
 sudo apt update
 sudo apt install -y nginx
-
-# customize nginx configuration file
 echo 'add_header X-Served-By $hostname;' | sudo tee /etc/nginx/conf.d/custom_response_header.conf
-
 sudo service nginx restart
