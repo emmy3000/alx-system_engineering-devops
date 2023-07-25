@@ -3,8 +3,8 @@
 Retrieve and display employees' TODO list progress using a REST API.
 Export data in JSON format.
 """
-import requests
 import json
+import requests
 
 
 def get_all_employees_todo_progress():
@@ -40,8 +40,6 @@ def get_all_employees_todo_progress():
             ]
 
             all_data[str(employee_id)] = completed_tasks
-
-        print(json.dumps(all_data, indent=2))
 
         filename = "todo_all_employees.json"
         with open(filename, 'w') as json_file:
