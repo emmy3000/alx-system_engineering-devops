@@ -1,15 +1,7 @@
 #!/usr/bin/python3
 """
 Retrieve and display an employee's TODO list progress using a REST API.
-
-Requirements:
-- Uses the 'requests' module.
-- Accepts an integer as a parameter (employee ID).
-- Displays the employee's TODO list progress in the specified format.
-- Exports the data to a CSV file with the format "USER_ID.csv".
-
-Usage:
-python script_name.py EMPLOYEE_ID
+Exports the data to a CSV file with the format "USER_ID.csv".
 """
 import requests
 import csv
