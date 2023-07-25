@@ -1,68 +1,27 @@
 #!/usr/bin/python3
 """
-Retrieve and display an employee's TODO list progress using a REST API.
-Exports the data to a CSV file with the format "USER_ID.csv".
+Script to export data in the CSV format
 """
-import requests
 import csv
+import requests as rq
+import sys
 
 
-def get_employee_todo_progress(employee_id):
-    """
-    Retrieve and display the employee's TODO list progress.
-
-    Args:
-        employee_id (int): The ID of the employee.
-
-    Returns:
-        None
-    """
+def main():
+    user_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com/"
-    employee_url = "{}users/{}".format(base_url, employee_id)
-    todos_url = "{}todos?userId={}".format(base_url, employee_id)
-
-    try:
-        employee_res = requests.get(employee_url)
-        employee_data = employee_res.json()
-        employee_name = employee_data.get('name', 'Unknown Employee')
-
-        todos_res = requests.get(todos_url)
-        todos_data = todos_res.json()
-
-        completed_tasks = [task for task in todos_data
-                           if task.get('completed', False)]
-
-        print("Employee {} is done with tasks ({}/{})".format(
-            employee_name, len(completed_tasks), len(todos_data)))
-
-        for task in completed_tasks:
-            print("\t{}".format(task.get('title', 'N/A')))
-
-        filename = "{}.csv".format(employee_id)
-        with open(filename, 'w', newline='') as csvfile:
-            csvwriter = csv.writer(csvfile)
-            csvwriter.writerow(
-                ["USER_ID",
-                 "USERNAME",
-                 "TASK_COMPLETED_STATUS",
-                 "TASK_TITLE"
-                 ])
-
-            for task in todos_data:
-                csvwriter.writerow([employee_id, employee_name,
-                                    task["completed"], task["title"]])
-
-        print("Data exported to {} successfully.".format(filename))
-
-    except requests.exceptions.RequestException as e:
-        print("Error occurred while fetching data:", e)
+    user_data = rq.get(base_url + "users/{}".format(user_id)).json()
+    username = user_data.get("username")
+    todos_data = rq.get(base_url + "todos", params={"userId": user_id}).json()
+    with open("{}.csv".format(user_id), "w", newline="") as csvfile:
+        csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        for task in todos_data:
+            csvwriter.writerow([user_id, 
+                                username, 
+                                task.get("completed"), 
+                                task.get("title")]
+                               )
 
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py EMPLOYEE_ID")
-    else:
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    main()
