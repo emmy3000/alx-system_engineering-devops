@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Retrieve and display an employee's TODO list
-progress using a REST API.
+Retrieve and display an employee's data using a REST API.
 """
 import requests
 import sys
@@ -21,6 +20,7 @@ def main():
     employee_name = user_data.get("name")
     total_tasks = len(todo_data)
     completed_task_count = len(completed_tasks)
+
     print("Employee {} is done with tasks ({}/{})"
           .format(employee_name, completed_task_count, total_tasks))
 
