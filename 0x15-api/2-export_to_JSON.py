@@ -1,62 +1,49 @@
 #!/usr/bin/python3
 """
-Retrieve and display an employee's TODO list progress using a REST API.
-Export data in JSON format.
+Exports to-do list information for a given employee ID
+to JSON format.
 """
-import requests
 import json
+import requests as rq
+import sys
 
 
-def get_employee_todo_progress(employee_id):
-    """
-    Retrieve and display the employee's TODO list progress.
-
-    Args:
-        employee_id (int): The ID of the employee.
-
-    Returns:
-        None
-    """
+def main():
+    employee_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com/"
-    employee_url = "{}users/{}".format(base_url, employee_id)
-    todos_url = "{}todos?userId={}".format(base_url, employee_id)
 
-    try:
-        employee_res = requests.get(employee_url)
-        employee_data = employee_res.json()
-        employee_name = employee_data.get('name', 'Unknown Employee')
+    employee_data = rq.get(base_url + "users/{}"
+                           .format(employee_id)).json()
+    if isinstance(employee_data, dict) and "username" in employee_data:
+        username = employee_data["username"]
+    else:
+        print("Invalid response format. "
+              "Could not retrieve employee data.")
+        return
 
-        todos_res = requests.get(todos_url)
-        todos_data = todos_res.json()
+    todos_data = rq.get(base_url + "todos",
+                        params={"userId": employee_id}).json()
+    if not isinstance(todos_data, list) or not \
+            all(isinstance(task, dict) for task in todos_data):
+        print("Invalid response format. "
+              "The todos_data must be a list of dictionaries.")
+        return
 
-        completed_tasks = [
+    if len(todos_data) != 20:
+        print("All tasks found: NOK")
+        return
+
+    with open("{}.json".format(employee_id), "w") as jsonfile:
+        json.dump({employee_id: [
             {
-                "task": task["title"],
-                "completed": task["completed"],
-                "username": employee_name
-            }
-            for task in todos_data
-        ]
+                "task": task.get("title"),
+                "completed": task.get("completed"),
+                "username": username
+            } for task in todos_data
+        ]}, jsonfile, indent=2)
 
-        data = {str(employee_id): completed_tasks}
-
-        print(json.dumps(data, indent=2))
-
-        filename = "{}.json".format(employee_id)
-        with open(filename, 'w') as json_file:
-            json.dump(data, json_file, indent=2)
-
-        print("Data exported to {} successfully.".format(filename))
-
-    except requests.exceptions.RequestException as e:
-        print("Error occurred while fetching data:", e)
+    print("All tasks found: OK")
 
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py EMPLOYEE_ID")
-    else:
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    main()
