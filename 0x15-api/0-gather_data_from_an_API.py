@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-"""Script using a REST API to retrieve TODO list progress for a given employee ID.
+"""
+Retrieve and display an employee's TODO list progress using a REST API.
 
 Requirements:
 - Uses the 'requests' module.
-- Accepts an integer as a parameter, which is the employee ID.
-- Displays the employee TODO list progress in the specified format.
+- Accepts an integer as a parameter (employee ID).
+- Displays the employee's TODO list progress in the specified format.
 
 Usage:
 python script_name.py EMPLOYEE_ID
@@ -13,7 +14,8 @@ import requests
 
 
 def get_employee_todo_progress(employee_id):
-    """Retrieve and display the employee's TODO list progress.
+    """
+    Retrieve and display the employee's TODO list progress.
 
     Args:
         employee_id (int): The ID of the employee.
@@ -22,24 +24,27 @@ def get_employee_todo_progress(employee_id):
         None
     """
     base_url = "https://jsonplaceholder.typicode.com/"
-    employee_url = "{}employees/{}".format(base_url, employee_id)
+    employee_url = "{}users/{}".format(base_url, employee_id)
     todos_url = "{}todos?userId={}".format(base_url, employee_id)
 
     try:
-        employee_response = requests.get(employee_url)
-        employee_data = employee_response.json()
+        employee_res = requests.get(employee_url)
+        employee_data = employee_res.json()
         employee_name = employee_data.get('name', 'Unknown Employee')
 
-        todos_response = requests.get(todos_url)
-        todos_data = todos_response.json()
+        todos_res = requests.get(todos_url)
+        todos_data = todos_res.json()
 
-        completed_tasks = [task for task in todos_data if task['completed']]
+        completed_tasks = [task for task in todos_data
+                           if task.get('completed', False)]
 
-        print("Employee {} is done with tasks ({}/{})".format(
-            employee_name, len(completed_tasks), len(todos_data)))
+        progress_line = "Employee {} is done with tasks ({}/{})".format(
+            employee_name, len(completed_tasks), len(todos_data)
+        )
+        print(progress_line + ":")
 
         for task in completed_tasks:
-            print("\t{}".format(task['title']))
+            print("\t{}".format(task.get('title', 'N/A')))
 
     except requests.exceptions.RequestException as e:
         print("Error occurred while fetching data:", e)
