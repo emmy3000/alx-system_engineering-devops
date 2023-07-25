@@ -16,9 +16,9 @@ def main():
     with open("{}.csv".format(user_id), "w", newline="") as csvfile:
         csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in todos_data:
-            csvwriter.writerow([user_id, 
-                                username, 
-                                task.get("completed"), 
+            csvwriter.writerow([user_id,
+                                username,
+                                task.get("completed"),
                                 task.get("title")]
                                )
 
