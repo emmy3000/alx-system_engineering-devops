@@ -16,7 +16,8 @@ def number_of_subscribers(subreddit):
         subreddit (str): Name of the subreddit.
 
     Returns:
-        int: Number of subscribers for the subreddit, or 0 if invalid or an error occurs.
+        int: Number of subscribers for the subreddit,
+        or 0 if invalid or an error occurs.
     """
     headers = {'User-Agent': 'MyRedditBot/1.0'}
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
