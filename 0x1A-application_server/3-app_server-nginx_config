@@ -1,20 +1,16 @@
 # Nginx Configuration for Handling Requests to Flask Apps
 
-# Listen on port 80 for incoming requests
 server {
     listen 80;
 
-    # Define server names for local and public requests
     server_name 127.0.0.1 54.209.192.188;
 
-    # Route requests for /airbnb-onepage/ to the Flask app on port 5000
     location /airbnb-onepage/ {
         proxy_pass http://127.0.0.1:5000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
 
-    # Route requests for /airbnb-dynamic/number_odd_or_even/ to the Flask app on port 5001
     location /airbnb-dynamic/number_odd_or_even/ {
         proxy_pass http://127.0.0.1:5001;
         proxy_set_header Host $host;
